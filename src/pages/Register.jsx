@@ -1,6 +1,3 @@
-import React from 'react'
-
-
 const Register = () => {
   const botId = import.meta.env.VITE_TELEGRAM_BOT_ID;
   const botUsername = import.meta.env.VITE_TELEGRAM_BOT_USERNAME;
@@ -27,6 +24,7 @@ const Register = () => {
       <footer className="mt-10 text-base-content opacity-70">&copy; 2025 Ecommerce Client</footer>
     </div>
   );
+  
 }
 
 export default Register
