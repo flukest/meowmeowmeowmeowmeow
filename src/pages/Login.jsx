@@ -5,15 +5,23 @@ const Login = () => {
   const navigate = useNavigate();
   const botId = import.meta.env.VITE_TELEGRAM_BOT_ID;
   const botUsername = import.meta.env.VITE_TELEGRAM_BOT_USERNAME;
-  const origin = window.location.origin;
+  const origin = window.location.origin + "/telegram-callback";
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleTelegramLogin = () => {
-    window.location.href =
+    window.TelegramLoginWidget = {
+      bot_id: botId,
+      origin: origin,
+      request_access: 'write',
+      embed: true,
+      bot_username: botUsername
+    };
+
+        window.location.href = 
       `https://oauth.telegram.org/auth?bot_id=${botId}&origin=${origin}&request_access=write&embed=1&bot_username=${botUsername}`;
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
