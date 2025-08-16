@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { login, logout } from "../redux/slices/authSlice";
 const TelegramCallback = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -22,6 +25,10 @@ const TelegramCallback = () => {
     try {
       const decoded = atob(tgAuthResult); // base64 → JSON string
       authData = JSON.parse(decoded);     // JSON string → object
+      //----
+      // Dispatch the auth data to Redux store
+      dispatch(login(authData));
+      
       console.log("Telegram Auth Data:", authData);
     } catch (err) {
       console.error("Decode error:", err);
@@ -30,7 +37,6 @@ const TelegramCallback = () => {
       return;
     }
 
-    // 🚀 Send to backend for verification
     fetch("http://localhost:3000/api/v1/auth/telegram", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
