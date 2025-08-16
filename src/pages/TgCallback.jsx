@@ -27,9 +27,8 @@ const TelegramCallback = () => {
       authData = JSON.parse(decoded);     // JSON string → object
       //----
       // Dispatch the auth data to Redux store
-      alert(authData)
-      dispatch(login(authData));
       
+
       console.log("Telegram Auth Data:", authData);
     } catch (err) {
       console.error("Decode error:", err);
@@ -47,6 +46,18 @@ const TelegramCallback = () => {
       .then((data) => {
         if (data.success) {
           localStorage.setItem("token", data.token);
+          const payload = {
+            user: {
+              id: data.user.id,
+              telegramId: data.user.telegramId,
+              username: data.user.username,
+              firstName: data.user.firstName,
+              lastName: data.user.lastName,
+              photoUrl: data.user.photoUrl,
+            },
+            token: data.token
+          };
+          dispatch(login(payload));
           navigate("/");
         } else {
           setError(data.message || "Telegram login failed");
