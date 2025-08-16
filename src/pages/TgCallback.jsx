@@ -27,6 +27,7 @@ const TelegramCallback = () => {
       authData = JSON.parse(decoded);     // JSON string → object
       //----
       // Dispatch the auth data to Redux store
+      alert(authData)
       dispatch(login(authData));
       
       console.log("Telegram Auth Data:", authData);
