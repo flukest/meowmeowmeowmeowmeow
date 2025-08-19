@@ -42,6 +42,7 @@ const TelegramCallback = () => {
       .then((data) => {
         if (data.success) {
           localStorage.setItem("token", data.token);
+
           dispatch(
             login({
               user: {

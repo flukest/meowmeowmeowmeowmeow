@@ -1,9 +1,16 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../redux/slices/authSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token"); // optional: clear token from localStorage
+  };
 
   return (
     <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center p-6">
@@ -22,6 +29,12 @@ const Home = () => {
                 Welcome, {user.firstName || user.username}
               </h2>
               <p className="text-lg text-gray-600">@{user.username || "NoUsername"}</p>
+              <button
+                onClick={handleLogout}
+                className="btn btn-outline btn-error mt-6"
+              >
+                Logout
+              </button>
             </>
           ) : (
             <Link
