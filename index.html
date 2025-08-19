@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?21" 
+        data-telegram-login="SHUTUPOKZBOT" 
+        data-size="large" 
+        data-onauth="onTelegramAuth(user)"
+        data-request-access="write">
+</script>
+<script>
+  function onTelegramAuth(user) {
+    console.log("Telegram user:", user);
+
+    // redirect to your React route with encoded user data
+    const encoded = btoa(JSON.stringify(user));
+    window.location.href = `/telegram-callback#tgAuthResult=${encoded}`;
+  }
+</script>
+
+  </body>
+</html>
